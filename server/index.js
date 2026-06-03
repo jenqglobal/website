@@ -1048,7 +1048,7 @@ app.post('/api/payments/paypal/capture-order', async (req, res) => {
     let serviceTitle = 'service';
     let servicePrice = 0;
     try {
-      const customData = JSON.parse(capture.result.purchase_units[0].description);
+      const customData = JSON.parse(capture.result.purchase_units[0].custom_id);
       serviceId = customData.serviceId;
       const service = db.prepare('SELECT * FROM services WHERE id = ?').get(serviceId);
       if (service) {

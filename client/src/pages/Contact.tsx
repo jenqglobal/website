@@ -4,8 +4,10 @@ import { useState } from 'react';
 import axios from 'axios';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { useApi } from '../context/ApiContext';
 
 export default function Contact() {
+  const { settings } = useApi();
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', company: '', message: '', preferred_contact: 'email' });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -92,25 +94,27 @@ export default function Contact() {
                     </div>
                     <div>
                       <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 2 }}>Email</p>
-                      <p style={{ fontWeight: 600, color: 'white' }}>admin@jenqglobal.site</p>
+                      <p style={{ fontWeight: 600, color: 'white' }}>{settings.contact_email}</p>
                     </div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                    <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(37,211,102,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <MessageCircle size={22} style={{ color: '#25D366' }} />
+                  {settings.contact_whatsapp && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                      <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(37,211,102,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <MessageCircle size={22} style={{ color: '#25D366' }} />
+                      </div>
+                      <div>
+                        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 2 }}>WhatsApp</p>
+                        <a href={`https://wa.me/${settings.contact_whatsapp}`} target="_blank" rel="noopener noreferrer" style={{ fontWeight: 600, color: 'white', textDecoration: 'none' }}>{settings.contact_phone || settings.contact_whatsapp}</a>
+                      </div>
                     </div>
-                    <div>
-                      <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 2 }}>WhatsApp</p>
-                      <a href="https://wa.me/917699044864" target="_blank" rel="noopener noreferrer" style={{ fontWeight: 600, color: 'white', textDecoration: 'none' }}>+91 7699044864</a>
-                    </div>
-                  </div>
+                  )}
                   <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
                     <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(139,92,246,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <Clock size={22} style={{ color: '#A78BFA' }} />
                     </div>
                     <div>
                       <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 2 }}>Business Hours</p>
-                      <p style={{ fontWeight: 600, color: 'white' }}>Mon-Fri: 9AM-6PM EST / GMT</p>
+                      <p style={{ fontWeight: 600, color: 'white' }}>{settings.business_hours}</p>
                     </div>
                   </div>
                 </div>

@@ -79,12 +79,14 @@ export default function Footer() {
                 </div>
                 <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>{settings.contact_email}</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(37,211,102,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <MessageCircle size={16} style={{ color: '#25D366' }} />
+              {settings.contact_whatsapp && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(37,211,102,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <MessageCircle size={16} style={{ color: '#25D366' }} />
+                  </div>
+                  <a href={`https://wa.me/${settings.contact_whatsapp}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>{settings.contact_phone || settings.contact_whatsapp}</a>
                 </div>
-                <a href="https://wa.me/917699044864" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>+91 7699044864</a>
-              </div>
+              )}
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                 <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(139,92,246,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Clock size={16} style={{ color: '#8B5CF6' }} />
