@@ -323,6 +323,19 @@ if (adminEmail && adminPassword) {
   }
 }
 
+// Fallback: create default admin if no users exist at all
+const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get().count;
+if (userCount === 0) {
+  const defaultEmail = 'admin@jenqglobal.com';
+  const defaultPassword = 'admin123';
+  const passwordHash = bcrypt.hashSync(defaultPassword, 10);
+  db.prepare('INSERT INTO users (email, password_hash, name, role) VALUES (?, ?, ?, ?)').run(
+    defaultEmail, passwordHash, 'Admin', 'admin'
+  );
+  console.log('Default admin created — email: admin@jenqglobal.com, password: admin123');
+  console.log('*** CHANGE THE DEFAULT PASSWORD AFTER FIRST LOGIN ***');
+}
+
 // Default Services
 const defaultServices = [
   { slug: 'website-maintenance', title: 'Website Maintenance & Management', description: 'Ongoing website updates, content changes, plugin management, and technical maintenance to keep your site running smoothly.', features: JSON.stringify(['Content Updates', 'Plugin Management', 'Performance Monitoring', 'Security Updates', 'Backup Management']), icon: 'Globe', category: 'maintenance', price: 299, featured: 1, order_index: 1 },
