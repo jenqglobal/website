@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" id="favicon-link" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary SEO Meta Tags -->
+    <meta name="description" content="JenQ Global Solutions provides comprehensive technology management for US and UK businesses. Website maintenance, security monitoring, 24/7 support, and growth optimization. Trusted by 500+ clients." />
+    <meta name="keywords" content="website maintenance US, tech support UK, website security monitoring, IT managed services, e-commerce support, website optimization, business technology partner, US UK tech company" />
+    <meta name="author" content="JenQ Global Solutions" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0a0a0f" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jenqglobal.com/" />
+    <meta property="og:title" content="JenQ Global Solutions - Complete Technology Management for US & UK Businesses" />
+    <meta property="og:description" content="Your dedicated tech partner serving US and UK businesses. 24/7 monitoring, security, maintenance, and growth optimization for websites, apps, and e-commerce stores. Trusted by 500+ businesses." />
+    <meta property="og:image" content="https://jenqglobal.com/og-image.jpg" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://jenqglobal.com/" />
+    <meta name="twitter:title" content="JenQ Global Solutions - Complete Technology Management for US & UK Businesses" />
+    <meta name="twitter:description" content="Your dedicated tech partner. 24/7 monitoring, security, maintenance, and growth optimization." />
+    <meta name="twitter:image" content="https://jenqglobal.com/og-image.jpg" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://jenqglobal.com/" />
+    
+    <title>JenQ Global Solutions - Complete Technology Management for US & UK Businesses</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
+    <!-- Structured Data (JSON-LD) for Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "JenQ Global Solutions",
+      "url": "https://jenqglobal.com",
+      "logo": "https://jenqglobal.com/logo.png",
+      "description": "Complete technology management for US and UK businesses. Website maintenance, security monitoring, 24/7 support, and growth optimization.",
+      "foundingDate": "2018",
+      "founderLocation": "New York, USA",
+      "areaServed": ["US", "UK"],
+      "serviceType": ["Website Maintenance", "Security Monitoring", "Technical Support", "Performance Optimization", "E-commerce Support"],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-888-555-0123",
+        "contactType": "Customer Support",
+        "availableLanguage": ["English"],
+        "hoursAvailable": "Mo-Fr 09:00-18:00 EST"
+      },
+      "sameAs": [
+        "https://linkedin.com/company/jenqglobal"
+      ]
+    }
+    </script>
+    
+    <!-- Structured Data for LocalBusiness -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "JenQ Global Solutions",
+      "description": "Technology management services for US and UK businesses",
+      "address": [{
+        "@type": "PostalAddress",
+        "addressLocality": "New York",
+        "addressRegion": "NY",
+        "addressCountry": "US"
+      }, {
+        "@type": "PostalAddress",
+        "addressLocality": "London",
+        "addressRegion": "England",
+        "addressCountry": "UK"
+      }],
+      "areaServed": ["US", "UK"],
+      "openingHours": "Mo-Fr 09:00-18:00",
+      "priceRange": "$99-$499/month"
+    }
+    </script>
+    
+    <script>
+      // Always use dark theme (UK flag colors)
+      document.documentElement.setAttribute('data-theme', 'dark');
+
+      // Dynamic favicon loader - will be updated after settings load
+      window.__updateFavicon = function(url) {
+        const favicon = document.getElementById('favicon-link');
+        if (favicon && url) {
+          favicon.href = url;
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
