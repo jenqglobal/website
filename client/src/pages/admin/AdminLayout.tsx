@@ -12,7 +12,7 @@ const adminNav = [
   { name: 'Pages', path: '/admin/pages', icon: FileText },
   { name: 'Blog', path: '/admin/blog', icon: FileText },
   { name: 'Inquiries', path: '/admin/inquiries', icon: MessageSquare },
-  { name: 'Chat', path: '/admin/chat', icon: MessageSquare },
+
   { name: 'Subscriptions', path: '/admin/subscriptions', icon: CreditCard },
   { name: 'Orders', path: '/admin/orders', icon: Package },
   { name: 'Visitors', path: '/admin/visitors', icon: Globe },
@@ -44,10 +44,7 @@ export default function AdminLayout() {
 
   const loadNotifications = async () => {
     try {
-      const [inquiriesRes, unreadRes] = await Promise.all([
-        axios.get('/api/inquiries', { headers: { Authorization: `Bearer ${token}` } }),
-        axios.get('/api/chat/unread-count', { headers: { Authorization: `Bearer ${token}` } })
-      ]);
+      const inquiriesRes = await axios.get('/api/inquiries', { headers: { Authorization: `Bearer ${token}` } });
 
       const newInquiries = inquiriesRes.data
         .filter((i: any) => i.status === 'new')
@@ -62,17 +59,7 @@ export default function AdminLayout() {
           link: '/admin/inquiries'
         }));
 
-      const chatNotifications = unreadRes.data.count > 0 ? [{
-        id: 'chat-unread',
-        type: 'chat' as const,
-        title: 'New Chat Messages',
-        message: `${unreadRes.data.count} unread message(s)`,
-        time: 'Just now',
-        read: false,
-        link: '/admin/chat'
-      }] : [];
-
-      setNotifications([...newInquiries, ...chatNotifications]);
+      setNotifications(newInquiries);
     } catch (err) {
       console.error('Failed to load notifications:', err);
     }

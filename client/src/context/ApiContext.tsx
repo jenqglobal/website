@@ -19,6 +19,7 @@ interface Settings {
   hero_subtitle: string;
   cta_text: string;
   cta_link: string;
+  tawk_to_property_id: string;
 }
 
 interface ApiContextType {
@@ -50,7 +51,8 @@ export function ApiProvider({ children }: { children: ReactNode }) {
     hero_title: 'Your Ongoing Tech & Growth Partner',
     hero_subtitle: 'We maintain, improve, and guide your systems every month—so you can focus on growing your business with confidence.',
     cta_text: 'Book a Free System Audit',
-    cta_link: '/contact'
+    cta_link: '/contact',
+    tawk_to_property_id: ''
   });
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));

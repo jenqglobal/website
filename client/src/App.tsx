@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { ApiProvider } from './context/ApiContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { CurrencyProvider } from './context/CurrencyContext';
@@ -9,7 +9,7 @@ import CookieBanner from './components/CookieBanner';
 import StickyCTA from './components/StickyCTA';
 import ExitIntentPopup from './components/ExitIntentPopup';
 import SocialProofCounter from './components/SocialProofCounter';
-import ChatWidget from './components/ChatWidget';
+import TawkToWidget from './components/TawkToWidget';
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -31,7 +31,7 @@ import Login from './pages/admin/Login';
 import AdminLayout from './pages/admin/AdminLayout';
 import Dashboard from './pages/admin/Dashboard';
 import SettingsPage from './pages/admin/Settings';
-import ChatManager from './pages/admin/ChatManager';
+
 import BlogManager from './pages/admin/BlogManager';
 import PagesManager from './pages/admin/PagesManager';
 import InquiriesManager from './pages/admin/InquiriesManager';
@@ -109,15 +109,13 @@ function AppRoutes() {
         <Route path="audit-reports" element={<AuditReportsManager />} />
         <Route path="visitors" element={<Visitors />} />
         <Route path="settings" element={<SettingsPage />} />
-        <Route path="chat" element={<ChatManager />} />
+
       </Route>
     </Routes>
   );
 }
 
 export default function App() {
-  const [chatOpen, setChatOpen] = useState(false);
-
   // Track page views on route change
   useEffect(() => {
     let sessionId = localStorage.getItem('visitorSessionId');
@@ -179,7 +177,7 @@ export default function App() {
             <StickyCTA />
             <ExitIntentPopup />
             <SocialProofCounter />
-            <ChatWidget isOpen={chatOpen} setIsOpen={setChatOpen} />
+            <TawkToWidget />
           </CurrencyProvider>
         </ApiProvider>
       </ThemeProvider>

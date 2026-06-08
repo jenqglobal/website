@@ -124,30 +124,6 @@ db.exec(`
     FOREIGN KEY (subscription_id) REFERENCES subscriptions(id)
   );
 
-  CREATE TABLE IF NOT EXISTS chat_conversations (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    visitor_name TEXT,
-    visitor_email TEXT,
-    visitor_phone TEXT,
-    status TEXT DEFAULT 'open',
-    assigned_to INTEGER,
-    last_message TEXT,
-    last_message_at DATETIME,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  );
-
-  CREATE TABLE IF NOT EXISTS chat_messages (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    conversation_id INTEGER NOT NULL,
-    sender_type TEXT DEFAULT 'visitor',
-    sender_id INTEGER,
-    message TEXT NOT NULL,
-    is_read INTEGER DEFAULT 0,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (conversation_id) REFERENCES chat_conversations(id)
-  );
-
   CREATE TABLE IF NOT EXISTS services (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     slug TEXT UNIQUE NOT NULL,
@@ -256,6 +232,7 @@ const defaultSettings = [
   ['smtp_from_email', ''],
   ['smtp_from_name', 'JenQ Global Solutions'],
   ['notification_email', 'hello@jenqglobal.com'],
+  ['tawk_to_property_id', ''],
   ['enable_popup', 'true'],
   ['hero_title', 'Your Ongoing Tech & Growth Partner'],
   ['hero_subtitle', 'We maintain, improve, and guide your systems every month.'],
@@ -1432,134 +1409,7 @@ app.post('/api/checkout/paypal/capture-order', async (req, res) => {
   }
 });
 
-// ==================== CHAT WIDGET API ====================
 
-app.post('/api/chat/start', (req, res) => {
-  const { name, email, phone, message } = req.body;
-  
-  try {
-    const result = db.prepare(`
-      INSERT INTO chat_conversations (visitor_name, visitor_email, visitor_phone, last_message, last_message_at, status)
-      VALUES (?, ?, ?, ?, datetime('now'), 'open')
-    `).run(name, email, phone, message);
-
-    const conversationId = result.lastInsertRowid;
-
-    if (message) {
-      db.prepare(`
-        INSERT INTO chat_messages (conversation_id, sender_type, message)
-        VALUES (?, 'visitor', ?)
-      `).run(conversationId, message);
-    }
-
-    res.json({ 
-      success: true, 
-      conversationId,
-      message: 'Conversation started'
-    });
-  } catch (error) {
-    console.error('Chat start error:', error);
-    res.status(500).json({ error: 'Failed to start conversation' });
-  }
-});
-
-app.post('/api/chat/message', (req, res) => {
-  const { conversationId, message, senderType = 'visitor', senderId } = req.body;
-  
-  try {
-    db.prepare(`
-      INSERT INTO chat_messages (conversation_id, sender_type, sender_id, message)
-      VALUES (?, ?, ?, ?)
-    `).run(conversationId, senderType, senderId, message);
-
-    db.prepare(`
-      UPDATE chat_conversations 
-      SET last_message = ?, last_message_at = datetime('now')
-      WHERE id = ?
-    `).run(message, conversationId);
-
-    res.json({ success: true });
-  } catch (error) {
-    console.error('Chat message error:', error);
-    res.status(500).json({ error: 'Failed to send message' });
-  }
-});
-
-app.get('/api/chat/messages/:conversationId', (req, res) => {
-  const { conversationId } = req.params;
-  
-  try {
-    const messages = db.prepare(`
-      SELECT * FROM chat_messages 
-      WHERE conversation_id = ?
-      ORDER BY created_at ASC
-    `).all(conversationId);
-
-    db.prepare(`UPDATE chat_messages SET is_read = 1 WHERE conversation_id = ?`).run(conversationId);
-
-    res.json(messages);
-  } catch (error) {
-    console.error('Get messages error:', error);
-    res.status(500).json({ error: 'Failed to get messages' });
-  }
-});
-
-app.get('/api/chat/conversations', (req, res) => {
-  try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-
-    const conversations = db.prepare(`
-      SELECT * FROM chat_conversations 
-      ORDER BY last_message_at DESC
-    `).all();
-
-    res.json(conversations);
-  } catch (error) {
-    console.error('Get conversations error:', error);
-    res.status(500).json({ error: 'Failed to get conversations' });
-  }
-});
-
-app.put('/api/chat/conversations/:id', (req, res) => {
-  const { id } = req.params;
-  const { status, assignedTo } = req.body;
-  
-  try {
-    if (status) {
-      db.prepare(`UPDATE chat_conversations SET status = ? WHERE id = ?`).run(status, id);
-    }
-    if (assignedTo !== undefined) {
-      db.prepare(`UPDATE chat_conversations SET assigned_to = ? WHERE id = ?`).run(assignedTo, id);
-    }
-    
-    res.json({ success: true });
-  } catch (error) {
-    console.error('Update conversation error:', error);
-    res.status(500).json({ error: 'Failed to update conversation' });
-  }
-});
-
-app.get('/api/chat/unread-count', (req, res) => {
-  try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-
-    const result = db.prepare(`
-      SELECT COUNT(*) as count FROM chat_messages 
-      WHERE is_read = 0 AND sender_type = 'visitor'
-    `).get();
-
-    res.json({ count: result.count });
-  } catch (error) {
-    console.error('Unread count error:', error);
-    res.status(500).json({ error: 'Failed to get unread count' });
-  }
-});
 
 // ==================== AUDIT REPORTS API ====================
 

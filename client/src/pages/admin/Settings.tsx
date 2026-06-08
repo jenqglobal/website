@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Save, Upload, Image, Palette, Mail, Phone, Check, Loader2, FileImage, CreditCard, Sparkles } from 'lucide-react';
+import { Save, Upload, Image, Palette, Mail, Phone, Check, Loader2, FileImage, CreditCard, Sparkles, MessageCircle } from 'lucide-react';
 import { useApi } from '../../context/ApiContext';
 
 export default function SettingsPage() {
@@ -300,6 +300,23 @@ export default function SettingsPage() {
               setSettings(newSettings);
             }} style={{ width: 18, height: 18 }} />
             <label style={{ ...labelStyle, marginBottom: 0 }}>Enable Offer Popup (30% Off)</label>
+          </div>
+        </div>
+
+        {/* Tawk.to Chat */}
+        <div style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: 24 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
+            <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(37,211,102,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <MessageCircle size={20} style={{ color: '#25D366' }} />
+            </div>
+            <h2 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'white' }}>Tawk.to Live Chat</h2>
+          </div>
+          <div>
+            <label style={labelStyle}>Tawk.to Property ID</label>
+            <input type="text" name="tawk_to_property_id" value={(settings as any).tawk_to_property_id || ''} onChange={handleChange} style={inputStyle} placeholder="e.g. 1234567890abc123def456789" />
+            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 8 }}>
+              Get your Property ID from Tawk.to Dashboard → Settings → Property Settings → Property ID. Leave empty to disable.
+            </p>
           </div>
         </div>
 
