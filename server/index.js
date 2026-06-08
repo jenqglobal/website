@@ -232,7 +232,7 @@ const defaultSettings = [
   ['smtp_from_email', ''],
   ['smtp_from_name', 'JenQ Global Solutions'],
   ['notification_email', 'hello@jenqglobal.com'],
-  ['tawk_to_property_id', '67add6303a842732607e4240'],
+  ['tawk_to_property_id', '67add6303a842732607e4240/1ijvgpc3h'],
   ['enable_popup', 'true'],
   ['hero_title', 'Your Ongoing Tech & Growth Partner'],
   ['hero_subtitle', 'We maintain, improve, and guide your systems every month.'],

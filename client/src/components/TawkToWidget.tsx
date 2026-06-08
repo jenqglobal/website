@@ -14,7 +14,7 @@ export default function TawkToWidget() {
 
     const s1 = document.createElement('script');
     s1.async = true;
-    s1.src = `https://embed.tawk.to/${propertyId}/default`;
+    s1.src = `https://embed.tawk.to/${propertyId}`;
     s1.charset = 'UTF-8';
     s1.setAttribute('crossorigin', '*');
 

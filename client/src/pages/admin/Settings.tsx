@@ -313,9 +313,9 @@ export default function SettingsPage() {
           </div>
           <div>
             <label style={labelStyle}>Tawk.to Property ID</label>
-            <input type="text" name="tawk_to_property_id" value={(settings as any).tawk_to_property_id || ''} onChange={handleChange} style={inputStyle} placeholder="e.g. 1234567890abc123def456789" />
+            <input type="text" name="tawk_to_property_id" value={(settings as any).tawk_to_property_id || ''} onChange={handleChange} style={inputStyle} placeholder="e.g. 67add6303a842732607e4240/1ijvgpc3h" />
             <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 8 }}>
-              Get your Property ID from Tawk.to Dashboard → Settings → Property Settings → Property ID. Leave empty to disable.
+              Format: <code>property_id/widget_id</code>. Get it from Tawk.to Dashboard → Property Settings. Leave empty to disable.
             </p>
           </div>
         </div>
